@@ -1,10 +1,11 @@
 import urllib.request
 import json
+from pythonping import ping
 
 
 class Server:
     ip = ""
-    port = "25565"
+    port = ""
 
     def __init__(self, ip, port="25565"):
         self.port = port
@@ -15,3 +16,6 @@ class Server:
         response = request.read().decode("utf-8")
         data = json.loads(response)
         return data
+
+    def get_ping(self):
+        return ping(self.ip, count=10, verbose=False)

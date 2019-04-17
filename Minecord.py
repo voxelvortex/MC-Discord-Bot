@@ -6,11 +6,6 @@ bot = commands.Bot(command_prefix='mc.')
 extensions = ["MCCommands"]
 
 
-@bot.command()
-async def ping(ctx, description="Pings the bot to see if it's online and to check its ping in ms"):
-    await ctx.send('{0} ms'.format( int(bot.latency*1000+.5)) )
-
-
 @bot.event
 async def on_ready():
     print("Ready!")

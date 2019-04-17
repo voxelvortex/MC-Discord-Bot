@@ -1,5 +1,6 @@
 import discord
 from discord.ext import commands
+import datetime
 from MC import Server
 import json
 
@@ -12,7 +13,7 @@ class MCCommands(commands.Cog):
             self.servers = json.load(file)
 
     @commands.command(name="status", aliases=["serverstatus", "server_status", "stat", "serverstat", "server_stat"],
-                      pass_conext=True, description="Returns information about a server given its ip and port")
+                      pass_conext=True, help="Returns information about a server given its ip and port")
     async def server_status(self, ctx, ip: str, port: int = 25565):
         await ctx.trigger_typing()
         server = Server(ip, port)
@@ -23,7 +24,7 @@ class MCCommands(commands.Cog):
         await ctx.send(embed=embed)
 
     @commands.command(name="ip", aliases=["server", "serverip", "server_ip"], pass_context=True,
-                      desctiption="Returns a server's ip given a keyword")
+                      help="Returns a server's ip given a keyword")
     async def ip(self, ctx, *args):
         await ctx.trigger_typing()
         for server in self.servers["list"]:
@@ -42,6 +43,19 @@ class MCCommands(commands.Cog):
                               colour=discord.Colour(0xff0000),
                               description=
                               "Please verify you are in a channel with authority to search for the given server")
+
+        await ctx.send(embed=embed)
+
+    @commands.command(name="ping", aliases=["getping", "get_ping", "getserverping", "get_server_ping"],
+                      pass_context=True, help="Gets ping of the discord bot to discord, or a given ip")
+    async def ping(self, ctx, ip: str="discordapp.com"):
+        await ctx.trigger_typing()
+        server = Server(ip)
+        ping = server.get_ping()
+
+        embed = discord.Embed(title="Pinging {0}".format(ip), colour=discord.Colour(0xf8e71c),
+                              description="{0}".format(ping),
+                              timestamp=datetime.datetime.utcfromtimestamp(1555527735))
 
         await ctx.send(embed=embed)
 
