@@ -9,7 +9,7 @@ class MCCommands(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
-        with open("servers.json","r") as file:
+        with open("servers.json", "r") as file:
             self.servers = json.load(file)
 
     @commands.command(name="status", aliases=["serverstatus", "server_status", "stat", "serverstat", "server_stat"],
@@ -41,14 +41,13 @@ class MCCommands(commands.Cog):
 
         embed = discord.Embed(title="Error: The server you searched for could not be found.",
                               colour=discord.Colour(0xff0000),
-                              description=
-                              "Please verify you are in a channel with authority to search for the given server")
+                              description="Please verify you are in a channel with authority to search for the given server")
 
         await ctx.send(embed=embed)
 
     @commands.command(name="ping", aliases=["getping", "get_ping", "getserverping", "get_server_ping"],
                       pass_context=True, help="Gets ping of the discord bot to discord, or a given ip")
-    async def ping(self, ctx, ip: str="discordapp.com"):
+    async def ping(self, ctx, ip: str = "discordapp.com"):
         await ctx.trigger_typing()
         server = Server(ip)
         ping = server.get_ping()
