@@ -46,7 +46,7 @@ class MCCommands(commands.Cog):
         await ctx.send(embed=embed)
 
     @commands.command(name="ping", aliases=["getping", "get_ping", "getserverping", "get_server_ping"],
-                      pass_context=True, help="Gets ping of the discord bot to discord, or a given ip")
+                      pass_context=True, help="Gets ping of the discord bot to discord, or a given ip", enabled=False)
     async def ping(self, ctx, ip: str = "discordapp.com"):
         await ctx.trigger_typing()
         server = Server(ip)
